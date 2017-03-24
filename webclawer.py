@@ -15,11 +15,10 @@ key = input('Enter the search query: ')
 # for reg ex : we take key to be independent word
 key = r'[\A\s]'+re.escape(key)+r'\s'
 roll = 150001
-limit_roll = 170000
+limit_roll = 160000
 url = 'http://home.iitk.ac.in/~'
 #make a dictionary of all the links encountered having key
 links_dic={}
-to_visit=[]
 max_entries = 100           #limit max entries for searches , we aren't using databses now so need to do this
 
 while roll < limit_roll:
@@ -42,22 +41,23 @@ while roll < limit_roll:
             continue
         soup = BeautifulSoup(data, 'html.parser')
         #print(soup.prettify())
-        #find key
-        all_text = soup.get_text()
-        # here rather than looking for the exact match i need to implement comment line #12
-        if re.search(key,all_text,re.IGNORECASE):
-            if end_url in links_dic.keys():
-                links_dic[end_url]+=1
-            else:
-                links_dic[end_url]=1
-
-        #find all links on that page containing the key
-        links_to = wsl.scan_all_links(soup, key)
-        #all_links = soup.find_all('a')
+        #find key only if the page is made rather it just be existing there
+        title_of_page = soup.title
+        if title_of_page == None:
+            roll+=1
+            continue
+        title_of_page=title_of_page.name
+        if not re.search('index',title_of_page,re.IGNORECASE):
+            #find all links on that page containing the key
+            links_to = wsl.getRelatedList([end_url], key)
+            for link_elem in links_to:
+                if link_elem in links_dic.keys():
+                    links_dic[link_elem]+=1
+                else:
+                    links_dic[link_elem]=1
         print (roll, user)
         roll+=1
     roll=((roll//10000)+1)*10000+1
 
 print (links_dic)
-#CURRENTLY the code is able to access each person's account and look for 'a' tags and the key itself
 #the process is rather slow, also the links on page may contain links that link back to same page so we need to avoid those.
