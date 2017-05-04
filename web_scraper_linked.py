@@ -38,6 +38,8 @@ def scan_all_links(url_list,key):
     #check if the current 'url' contains the key
     all_text = soup.get_text()
     if re.search(key, all_text, re.IGNORECASE):
+        if url.endswith('/'):
+            url = url[:-1]
         ln_with_key.append(url)
     scan_all_links(url_list,key)
 
