@@ -1,12 +1,13 @@
 import re
 import urllib.request as ul
 from bs4 import BeautifulSoup
+import queue
 
 MAX_DEPTH = 10
 ln_with_key = []
 #key = r'[\A\s]'+re.escape('esc101')+r'\s'
 iterations = 0
-#the arguments to be passed , soup  and key
+#the arguments to be passed , url_list  and key
 def scan_all_links(url_list,key):
     global iterations
     if not url_list or iterations>MAX_DEPTH: return
@@ -46,7 +47,7 @@ def scan_all_links(url_list,key):
 def getRelatedList(url_list, key):
     global iterations, ln_with_key
     iterations = 0
-    ln_with_key = []
+    ln_with_key = queue.Queue()
     scan_all_links(url_list,key)
     return list(set(ln_with_key))[:]
 

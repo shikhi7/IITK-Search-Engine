@@ -49,7 +49,9 @@ while roll < limit_roll:
         title_of_page=title_of_page.name
         if not re.search('index',title_of_page,re.IGNORECASE):
             #find all links on that page containing the key
+            #links_to makes more sense if it is Priority queue
             links_to = wsl.getRelatedList([end_url], key)
+            #check for hits
             for link_elem in links_to:
                 if link_elem in links_dic.keys():
                     links_dic[link_elem]+=1
@@ -60,4 +62,3 @@ while roll < limit_roll:
     roll=((roll//10000)+1)*10000+1
 
 print (links_dic)
-#the process is rather slow, also the links on page may contain links that link back to same page so we need to avoid those.
