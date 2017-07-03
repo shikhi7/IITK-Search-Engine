@@ -5,4 +5,4 @@ To say in brief it searchs page and people within IITK when provided a key to lo
 The program is still under development.
 
 ## Running the program
-In terminal, run "python3 webclawer".<br>
+In terminal, run "python3 webcrawler".<br>
