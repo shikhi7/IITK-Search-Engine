@@ -38,3 +38,7 @@ def getStudentData(x):
     #return student_dic[' E-Mail: ']
     return (student_dic)
 
+shikhar=getStudentData(150669)
+for keys,values in shikhar.items():
+    print(keys)
+    print(values)

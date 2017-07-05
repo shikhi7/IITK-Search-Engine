@@ -47,7 +47,7 @@ def scan_all_links(url_list,key):
 def getRelatedList(url_list, key):
     global iterations, ln_with_key
     iterations = 0
-    ln_with_key = queue.Queue()
+    ln_with_key = []
     scan_all_links(url_list,key)
     return list(set(ln_with_key))[:]
 
